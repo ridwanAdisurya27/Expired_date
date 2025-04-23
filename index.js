@@ -2,9 +2,9 @@ const express = require('express');
 const axios = require('axios');
 const {google} = require("googleapis");
 const bodyParser = require("body-parser");
-const keys = require("./credentials.json");
+const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000
 const spreadsheetId = "1FoFKjs65XJnmatbUqRPm-PMvmJJqVkkXOa9do6f_yeo";
 const process = require('dotenv').config();
 
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 // Auth Google
 const auth = new google.auth.GoogleAuth({
-    credentials: keys,
+    credentials : credentials,
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
