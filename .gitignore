@@ -1,0 +1,10 @@
+# Node.js
+node_modules/
+.env
+
+# Google API Keys
+credentials.json
+
+# Sistem file
+.DS_Store
+Thumbs.db
