@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const {google} = require("googleapis");
@@ -6,7 +7,6 @@ const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
 const app = express();
 const PORT = process.env.PORT || 3000
 const spreadsheetId = "1FoFKjs65XJnmatbUqRPm-PMvmJJqVkkXOa9do6f_yeo";
-const process = require('dotenv').config();
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -172,7 +172,7 @@ app.get("/cek-expired", async (req, res) => {
                     },
                     {
                         headers: {
-                            Authorization: `Bearer EAAJHdMurKMEBOxNZASF57oPTuBQWUfhYNGj28LxZBjvEZBnb8ZB5SlC54mMJ7ySihTAAWxse1dNQy8xz6AbQVAaERLsmHhZAdAthl1clq3Jsb3LXJeotLZA0OZBGDtzDFW5kxZBaqHUmtFlu3sfcoSBKu8q7j7bPZC2lDpWmYIjkQY0q4dN7dAj6R1f7efMdlIFUUZAKBl3ZALVjVzuDIUeBuDjMNto5ZBkZD`,
+                            Authorization: `Bearer ${process.env.WA_TOKEN}`,
                             'Content-Type': 'application/json'
                         }
                     }
