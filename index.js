@@ -202,7 +202,7 @@ app.get("/cek-expired", async (req, res) => {
 });
 
 app.get('/webhook', (req, res) => {
-    const verifyToken = `${process.env.FACEBOOK_VERIFY_TOKEN}`;
+    const verifyToken = `20070505ridwan`;
 
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
