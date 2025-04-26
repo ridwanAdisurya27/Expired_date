@@ -43,7 +43,7 @@ app.post('/send-message', async (req, res) => {
         const response = await axios.post(
             'https://graph.facebook.com/v22.0/640708259121704/messages', {
                 messaging_product: 'whatsapp',
-                to: 6283857206242,
+                to: 6285335675361,
                 type: 'template',
                 template: {
                     name: 'pengingat_product',
@@ -201,30 +201,20 @@ app.get("/cek-expired", async (req, res) => {
     });
 });
 
-app.post('/webhook', async (req, res) => {
-    const body = req.body;
+app.get('/webhook', (req, res) => {
+    const verifyToken = `${process.env.FACEBOOK_VERIFY_TOKEN}`;
 
-    // Cek kalau ada pesan masuk dari WhatsApp
-    if (body.object) {
-        if (
-            body.entry &&
-            body.entry[0].changes &&
-            body.entry[0].changes[0].value.messages &&
-            body.entry[0].changes[0].value.messages[0]
-        ) {
-            const message = body.entry[0].changes[0].value.messages[0];
-            const from = message.from; // Nomor pengirim
-            const msgBody = message.text?.body || ''; // Isi pesan
+    const mode = req.query['hub.mode'];
+    const token = req.query['hub.verify_token'];
+    const challenge = req.query['hub.challenge'];
 
-            console.log(`Pesan masuk dari ${from}: ${msgBody}`);
-
-            // Kirim template selamat datang
-            await sendWelcomeTemplate(from);
+    if (mode && token) {
+        if (mode === 'subscribe' && token === verifyToken) {
+            console.log('Webhook verified!');
+            res.status(200).send(challenge);
+        } else {
+            res.sendStatus(403);
         }
-
-        res.sendStatus(200);
-    } else {
-        res.sendStatus(404);
     }
 });
 
